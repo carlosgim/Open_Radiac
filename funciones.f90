@@ -2,7 +2,7 @@ real (kind=8) function fs(rig,N,sigma)
 !Funcion que calcula el camino libre
   implicit none
   real(kind=8),intent(in):: N
-  real (kind=8)::rig,sigma,fs
+  real (kind=8)::rig,sigma
  fs=-log(rig)/(N*sigma) !El factor 1D2 viene de corregir N (1/m^3)
   
   return

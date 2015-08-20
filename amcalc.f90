@@ -15,7 +15,7 @@
          !Funcion que calcula el camino libre
          implicit none
          real(kind=8),intent(in):: N
-         real (kind=8)::rig,sigma,fs
+         real (kind=8)::rig,sigma
        end function fs
 
          real (kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
@@ -93,8 +93,8 @@ atenuacion:do aten=1,100
     lpprinc:do j=1,fotones
        E1=E0
        dx=0.0D0;dy=0.0D0;dz=0.0D0
-!       write(10,*) ""
-!       write(10,*) dx,dy,dz,E1,"Inicia"
+       write(10,*) ""
+       write(10,*) dx,dy,dz,E1,"Inicia"
        lopmedio=0 !Para indicar si es un fotón primario o no
        medio:do
           lopmedio=lopmedio+1
@@ -117,7 +117,7 @@ atenuacion:do aten=1,100
              !------------------------------------------------------------------
              x=rand()
              s=fs(x,N,sigma)
-             !write(*,*) s,sigma*N,sigma,E0
+             write(*,*) s,sigma*N,sigma,E0
              if (lopmedio.eq.1.and.s.gt.rx) then
                 lopenergia=lopenergia+1 
                 exit medio
@@ -137,7 +137,7 @@ atenuacion:do aten=1,100
                  if(aten.eq.100) then
                       kn=nint((E1/E0)*100.D0)
                       conteo(kn)=conteo(kn)+1
-                    ! write(10,*) dx,dy,dz,E1,"Fotoelectrico"
+                     write(10,*) dx,dy,dz,E1,"Fotoelectrico"
                   end if
                    exit medio
                 end if
@@ -204,7 +204,7 @@ atenuacion:do aten=1,100
 
                 if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
                     abs(dz).ge.rz) then
-               ! write(*,*) "Sale del medio en la segunda interacción"
+                write(*,*) "Sale del medio en la segunda interacción"
                 exit medio
                 end if
                 
@@ -212,7 +212,7 @@ atenuacion:do aten=1,100
                 if(aten.eq.100) then
                 kn=nint((dE/E0)*100.D0)
                 conteo(kn)=conteo(kn)+1
-                !write(10,*) dx,dy,dz,dE,"Compton"
+                write(10,*) dx,dy,dz,dE,"Compton"
                 end if
 
           end do medio
@@ -234,7 +234,7 @@ end do atenuacion
 !103 format(x,A,2x,I4,x,A)
   !=============================================================================
   write(*,*) '****************************************************************'
-  write(*,'(30x,A)') 'PARAMETROS INGRESADS'
+  write(*,'(30x,A)') 'PARAMETROS INGRESADOS'
   write(*,101) 'Espesor del material=',rx,"m"
   write(*,*) 'Energía de fotones incidentes=','1.0',"MeV"
   write(*,*) 'Numero de fotones incidentes=',fotones
