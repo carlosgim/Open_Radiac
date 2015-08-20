@@ -20,10 +20,13 @@ git clone https://github.com/carlosgim/amcalc.git
 Requisitos:
 ===========
 
-gfortran
-
+- gfortran
+- Python 2.7
+- Tabla XCOM para el elemento que se va a utilizar (ver sitio)
 Como ejecutarlo:
 ================
+
+$ ./ramc
 
 Contacto:
 =========

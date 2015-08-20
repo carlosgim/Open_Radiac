@@ -89,7 +89,7 @@
 atenuacion:do aten=1,100
        E0=E0+0.01D0 !Energía inicial
        lopenergia=0 !Inicializo el conteo de fotones primarios
-       fotones=1E6
+       fotones=1E3
     lpprinc:do j=1,fotones
        E1=E0
        dx=0.0D0;dy=0.0D0;dz=0.0D0
@@ -117,7 +117,7 @@ atenuacion:do aten=1,100
              !------------------------------------------------------------------
              x=rand()
              s=fs(x,N,sigma)
-             write(*,*) s,sigma*N,sigma,E0
+!             write(*,*) s,sigma*N,sigma,E0
              if (lopmedio.eq.1.and.s.gt.rx) then
                 lopenergia=lopenergia+1 
                 exit medio
@@ -204,7 +204,7 @@ atenuacion:do aten=1,100
 
                 if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
                     abs(dz).ge.rz) then
-                write(*,*) "Sale del medio en la segunda interacción"
+!                write(*,*) "Sale del medio en la segunda interacción"
                 exit medio
                 end if
                 

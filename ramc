@@ -34,6 +34,11 @@ class set_enviroment:
     os.system("gfortran amcalc.f90 ")
     os.system("./a.out")
 
+  def grafic(self):
+    os.system("gnuplot atenuacion.gnu")
+    os.system("gnuplot histograma.gnu")
+    os.system("gnuplot seccion.gnu")
+    os.system("gnuplot seccion_log.gnu")
 #    for files in source:
 #      if files.endswith(".dat"):
 #        shutil.copy(src+files,destination)
@@ -44,3 +49,5 @@ class set_enviroment:
 
 
 set_enviroment().main_run()
+print "Generando graficos"
+set_enviroment().grafic()
