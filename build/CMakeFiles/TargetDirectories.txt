@@ -1,0 +1,3 @@
+/home/carlosgim/Documentos/DEV_STUFF/Fortran_cmake_temp/AMCALC_Test_cmake/bin/CMakeFiles/amcalc.dir
+/home/carlosgim/Documentos/DEV_STUFF/Fortran_cmake_temp/AMCALC_Test_cmake/build/CMakeFiles/distclean.dir
+/home/carlosgim/Documentos/DEV_STUFF/Fortran_cmake_temp/AMCALC_Test_cmake/lib/CMakeFiles/modules.dir
