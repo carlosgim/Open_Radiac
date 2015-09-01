@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-    Launch script for amcalc calculations.
+    Launch script for amcalc test.
   
    
     Written by Carlos A. Gimenez, Natural and Exact Science Faculty
@@ -19,6 +19,7 @@ import os
 import sys
 import shutil
 import glob
+import subprocess
 
 if sys.version < '2.4':
     print('pam requires python version >= 2.4')
@@ -37,26 +38,37 @@ class set_environment:
 #   os.system("./amcalc")
 
   def prepare_files(self):
-    src = os.getcwd()+"/testing/"
-    destination = os.getcwd()
+    src = os.getcwd()+"/example/"
+    test_folder = os.getcwd()+"/test/"
+
+    if not os.path.exists(test_folder):
+      os.makedirs(test_folder)
+
     source = os.listdir(src)
+
     for files in source:
       if files.endswith(".dat"):
-        shutil.copy(src+files,destination)
+        shutil.copy(src+files,test_folder)
+    
+    shutil.copy(os.getcwd()+"/bin/amcalc",test_folder)
+     
+    p = subprocess.Popen(["./amcalc"], cwd=test_folder)
+    p.wait()
+# Run code in different folder
 
-  def clean_environment(self):
-    for rm_files in glob.glob('*.dat'):
-      os.remove(rm_files)
+#  def clean_environment(self):
+#    for rm_files in glob.glob('*.dat'):
+#      os.remove(rm_files)
 
-  def grafic(self):
-    os.system("gnuplot atenuacion.gnu")
-    os.system("gnuplot histograma.gnu")
-    os.system("gnuplot seccion.gnu")
-    os.system("gnuplot seccion_log.gnu")
+#  def grafic(self):
+#    os.system("gnuplot atenuacion.gnu")
+#    os.system("gnuplot histograma.gnu")
+#    os.system("gnuplot seccion.gnu")
+#    os.system("gnuplot seccion_log.gnu")
 
 set_environment().prepare_files()
 #set_environment().main_run()
 print "Generando graficos"
 #set_environment().grafic()
 print "clean enviroment"
-set_environment().clean_environment()
+#set_environment().clean_environment()

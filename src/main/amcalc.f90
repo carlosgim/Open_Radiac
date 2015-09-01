@@ -1,4 +1,3 @@
-!  include "bar.f90"
   program TecnicasNucleares
     implicit none
     real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold

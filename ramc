@@ -31,7 +31,6 @@ class set_enviroment:
     Initialize the global set of variables
     """
   def main_run(self):
-    os.system("gfortran amcalc.f90 -o binamcalc")
     os.system("./amcalc")
 
 
