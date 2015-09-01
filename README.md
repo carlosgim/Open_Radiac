@@ -48,7 +48,7 @@ $ git clone https://github.com/carlosgim/..
 
 ### Como ejecutarlo ###
 
-$ ./ramc
+     $ ./ramc
 
 ## Contacto ##
 
