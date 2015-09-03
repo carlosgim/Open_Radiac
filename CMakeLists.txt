@@ -47,7 +47,7 @@ ENDIF(FCNAME STREQUAL "pgf90")
 ############################################################
 
 # Define the executable name
-SET(FOOEXE amcalc)
+SET(FOOEXE oprad)
 
 # Define the library name
 SET(BARLIB modules)

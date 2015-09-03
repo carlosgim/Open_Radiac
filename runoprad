@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-    Launch script for amcalc calculations.
+    Launch script for OpenRadiac calculations.
   
    
     Written by Carlos A. Gimenez, Natural and Exact Science Faculty
@@ -11,7 +11,7 @@
     Contributors: --
    
     Environment variables used by pam:
-             DIRTIMEOUT        - time out limit for amcalc run
+             DIRTIMEOUT        - time out limit for OpenRadiac run
           
 """
 
@@ -24,14 +24,14 @@ if sys.version < '2.4':
 
 class set_enviroment:
   """
-  class for handling the amcalc run
+  class for handling the OpenRadiac run
   """
   def __init__(self):
     """
     Initialize the global set of variables
     """
   def main_run(self):
-    os.system("./amcalc")
+    os.system("./oprad")
 
 
 set_enviroment().main_run()

@@ -1,21 +1,21 @@
-module amcalc_molecule
+module oprad_molecule
 !================================================================================!
 ! Initializacion of all variables for the qed_nmr module
 !================================================================================!
 
   implicit none
 
-  public  :: amcalc_molecule_print_test
+  public  :: oprad_molecule_print_test
 
 
-  type :: amcalc_variables
+  type :: oprad_variables
     integer :: ntest
     character(len=50) :: title
-  end type amcalc_variables
+  end type oprad_variables
 
 contains
 
-  subroutine amcalc_molecule_print_test
+  subroutine oprad_molecule_print_test
 
   !==============================================================================!
   !           Initialize module of Molecules Running                             !
@@ -23,7 +23,7 @@ contains
 
 !  ntest=21
   write(*,*) 'ntest'
-  end subroutine amcalc_molecule_print_test
+  end subroutine oprad_molecule_print_test
 
 
-end module amcalc_molecule
+end module oprad_molecule

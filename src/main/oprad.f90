@@ -1,5 +1,5 @@
 program TecnicasNucleares
-!  use amcalc_molecule, only: amcalc_molecule_print_test
+!  use oprad_molecule, only: oprad_molecule_print_test
 
     implicit none
     real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold

@@ -3,7 +3,7 @@
 ########################################
 
 # Add the source files
-SET(FOO_src ${SRCFOO}/amcalc.f90
+SET(FOO_src ${SRCFOO}/oprad.f90
             ${SRCFOO}/constants.f90
 )
 
@@ -14,7 +14,7 @@ ADD_EXECUTABLE(${FOOEXE} ${FOO_src})
 # Add the needed libraries and special compiler flags
 #####################################################
 
-# This links amcalc to the module library
+# This links openradiac to the module library
 TARGET_LINK_LIBRARIES(${FOOEXE} ${BARLIB})
 
 # Uncomment if you need to link to BLAS and LAPACK

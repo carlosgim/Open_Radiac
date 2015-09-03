@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-    Launch script for amcalc test.
+    Launch script for OpenRadiac test.
   
    
     Written by Carlos A. Gimenez, Natural and Exact Science Faculty
@@ -11,7 +11,7 @@
     Contributors: --
    
     Environment variables used by pam:
-             DIRTIMEOUT        - time out limit for amcalc run
+             DIRTIMEOUT        - time out limit for OpenRadiac run
           
 """
 
@@ -27,7 +27,7 @@ if sys.version < '2.4':
 
 class set_environment:
   """
-  class for handling the amcalc run
+  class for handling the OpenRadiac run
   """
   def __init__(self):
     """
@@ -46,9 +46,9 @@ class set_environment:
       if files.endswith(".dat"):
         shutil.copy(src+files,test_folder)
     
-    shutil.copy(os.getcwd()+"/bin/amcalc",test_folder)
+    shutil.copy(os.getcwd()+"/bin/oprad",test_folder)
      
-    p = subprocess.Popen(["./amcalc"], cwd=test_folder)
+    p = subprocess.Popen(["./oprad"], cwd=test_folder)
     p.wait()
 
 #  def clean_environment(self):
