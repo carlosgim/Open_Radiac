@@ -30,8 +30,6 @@ e-mail: scire1905[arroba]gmail.com
 
 ## References ##
 
-This code are based on the next reference
-
 - Am. J. Phys. 71 (1), January 2003
 
 ## Source cmake temp ##
