@@ -1,4 +1,6 @@
-  program TecnicasNucleares
+program TecnicasNucleares
+!  use amcalc_molecule, only: amcalc_molecule_print_test
+
     implicit none
     real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold
     real(kind=8)::b0,b1,b2,alfaZ,faZ,sigma,sigmaPE,sigmaKN,rho,MA
