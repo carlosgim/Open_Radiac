@@ -2,7 +2,7 @@
 
 AMCalc Program - Version 1.0 03/09/2015
 
-A simple algorithm for the transport of gamma rays in a medium
+A simple algorithm for study the transport of gamma rays in a medium
    
 Written by Carlos A. Gimenez, Natural and Exact Science Faculty
                               Northeastern University of Argentina,
