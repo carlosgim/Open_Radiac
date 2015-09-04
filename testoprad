@@ -51,10 +51,6 @@ class set_environment:
     p = subprocess.Popen(["./oprad"], cwd=test_folder)
     p.wait()
 
-#  def clean_environment(self):
-#    for rm_files in glob.glob('*.dat'):
-#      os.remove(rm_files)
-
 #  def grafic(self):
 #    os.system("gnuplot atenuacion.gnu")
 #    os.system("gnuplot histograma.gnu")
