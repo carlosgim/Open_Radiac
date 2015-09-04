@@ -1,6 +1,6 @@
 # OpenRadiac #
 
-OpenRadiac Program - Version 1.0 03/09/2015
+[OpenRadiac Program](http://carlosgim.github.io/OpenRadiac/) - Version 1.0 03/09/2015
 
 A simple algorithm for study the transport of gamma rays in a medium
    
