@@ -12,13 +12,27 @@ Written by Carlos A. Gimenez, Natural and Exact Science Faculty
    
 ## Requirements ##
 
-- gfortran
+- gfortran or another fortran compiler
 - Python 2.7
 - cmake
 
 ### HOWTO ###
 
-     $ ./ramc
+First you need to install:
+
+     $ ./install
+
+If you want to clean the installation just run:
+
+     $ ./clean
+
+the next step is testing the code:
+
+     $ ./testoprad
+
+For running a new sistem use the follow comands:
+
+     $ ./runoprad
 
 ## Contact ##
 
