@@ -43,8 +43,14 @@ class set_enviroment:
     os.system("echo"+msg)
     print "done"
     os.system("git commit -a -m"+msg)
-set_enviroment().main_run()
 
+  def pull_push(self):
+    os.system("git pull origin Test")
+    print "Pull correct"
+    os.system("git push origin Test")
+
+set_enviroment().main_run()
+set_enviroment().pull_push()
 print '-----------------------------------'
 print '    Thanks!, enjoy your meal       '
 print '-----------------------------------'
