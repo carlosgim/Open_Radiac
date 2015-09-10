@@ -1,5 +1,6 @@
 program TecnicasNucleares
-!  use oprad_molecule, only: oprad_molecule_print_test
+  use oprad_functions
+  use oprad_molecule, only: oprad_molecule_print_test
 
     implicit none
     real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold
@@ -11,27 +12,27 @@ program TecnicasNucleares
     real(kind=8)::N,Z
     integer(kind=8)::i,j,kn,bajaenerg,fotones,aten
 
-    interface
-       real (kind=8) function fs(rig,N,sigma)
-         !Funcion que calcula el camino libre
-         implicit none
-         real(kind=8),intent(in):: N
-         real (kind=8)::rig,sigma
-       end function fs
+!    interface
+!       real (kind=8) function fs(rig,N,sigma)
+!         !Funcion que calcula el camino libre
+!         implicit none
+!         real(kind=8),intent(in):: N
+!         real (kind=8)::rig,sigma
+!       end function fs
 
-         real (kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
-         !Funcion que calcula sección eficaz Efecto Fotoeléctrico
-         implicit none
-         real (kind=8)::Pi,re,gama,alfaZ,b0,b1,b2,faZ
-       end function funcsigmaPE
+!         real (kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
+!         !Funcion que calcula sección eficaz Efecto Fotoeléctrico
+!         implicit none
+!         real (kind=8)::Pi,re,gama,alfaZ,b0,b1,b2,faZ
+!       end function funcsigmaPE
 
-       real (kind=8) function funcsigmaKN(Pi,gama)
-         !Funcion que calcula sección eficaz Efecto Compton
-         implicit none
-         real (kind=8)::Pi,gama
-       end function funcsigmaKN
+!       real (kind=8) function funcsigmaKN(Pi,gama)
+!         !Funcion que calcula sección eficaz Efecto Compton
+!         implicit none
+!         real (kind=8)::Pi,gama
+!       end function funcsigmaKN
 
-    end interface
+!   end interface
     
     Open(10,file='Datos.dat')
     Open(20,file='Conteo.dat')
