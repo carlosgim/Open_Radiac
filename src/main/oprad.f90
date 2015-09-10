@@ -1,6 +1,7 @@
 program TecnicasNucleares
   use oprad_functions
   use oprad_molecule, only: oprad_molecule_print_test
+  use oprad_atomic 
 
     implicit none
     real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold

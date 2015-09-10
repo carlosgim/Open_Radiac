@@ -2,6 +2,20 @@ module oprad_molecule
 !================================================================================!
 ! Initializacion of all variables for the qed_nmr module
 !================================================================================!
+!
+!   This module was develop by: Jessica Riback
+!
+!                                  Natural and Exact Science Faculty
+!                                  Northeastern University of Argentina,
+!                                  Corrientes, Argentina
+!
+! 
+!   10 of sept 2015
+!
+!================================================================================!
+
+
+
 
   implicit none
 

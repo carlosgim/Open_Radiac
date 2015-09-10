@@ -8,7 +8,11 @@ Written by Carlos A. Gimenez, Natural and Exact Science Faculty
                               Northeastern University of Argentina,
                               Corrientes, Argentina
    
-    Contributors: See in each module
+    Contributors:
+    Riback, Jessica
+    Pasian, Francisco
+    Prieto, Leticia
+    Matusevich, Gabriel
    
 ## Requirements ##
 
