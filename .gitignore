@@ -1,0 +1,5 @@
+/bin
+/lib
+CMakeCache.txt
+CMakeFiles/CMakeOutput.log
+CMakeFiles/Makefile2
