@@ -1,5 +1,8 @@
 /bin
 /lib
+/test
 CMakeCache.txt
-CMakeFiles/CMakeOutput.log
-CMakeFiles/Makefile2
+/CMakeFiles/CMakeOutput.log
+/CMakeFiles/Makefile2
+/CMakeFiles/Makefile.cmake
+Makefile

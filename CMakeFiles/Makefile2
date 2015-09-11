@@ -146,7 +146,7 @@ bin/clean: bin/CMakeFiles/oprad.dir/clean
 .PHONY : bin/clean
 
 # Convenience name for "preinstall" pass in the directory.
-bin/preinstall:
+bin/preinstall: bin/CMakeFiles/oprad.dir/preinstall
 .PHONY : bin/preinstall
 
 #=============================================================================
@@ -175,6 +175,15 @@ bin/CMakeFiles/oprad.dir/rule: cmake_check_build_system
 # Convenience name for target.
 oprad: bin/CMakeFiles/oprad.dir/rule
 .PHONY : oprad
+
+# Pre-install relink rule for target.
+bin/CMakeFiles/oprad.dir/preinstall:
+	$(MAKE) -f bin/CMakeFiles/oprad.dir/build.make bin/CMakeFiles/oprad.dir/preinstall
+.PHONY : bin/CMakeFiles/oprad.dir/preinstall
+
+# Prepare target for install.
+preinstall: bin/CMakeFiles/oprad.dir/preinstall
+.PHONY : preinstall
 
 # clean rule for target.
 bin/CMakeFiles/oprad.dir/clean:
