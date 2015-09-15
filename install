@@ -6,7 +6,7 @@
    
     Written by Carlos A. Gimenez, Natural and Exact Science Faculty
                                   Northeastern University of Argentina,
-        			  Corrientes, Argentina
+        			              Corrientes, Argentina
    
     Contributors: --
    
@@ -14,7 +14,7 @@
              DIRTIMEOUT        - time out limit for OpenRadiac run
           
 """
-
+ 
 import os
 import sys
 import subprocess
@@ -25,7 +25,7 @@ if sys.version < '2.4':
 
 class set_enviroment:
   """
-  class for handling the OpenRadiac setup
+  class for handling the  OpenRadiac setup
   """
   def __init__(self):
     """

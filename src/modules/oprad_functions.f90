@@ -1,3 +1,5 @@
+! (c) Carlos A. Gimenez
+! licensed under the GNU General Public License V3
 module oprad_functions
   
   implicit none

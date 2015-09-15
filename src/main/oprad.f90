@@ -1,45 +1,26 @@
-program TecnicasNucleares
-  use oprad_functions
+! (c) Carlos A. Gimenez
+! licensed under the GNU General Public License V3
+program OpenRadiac
+
   use oprad_molecule, only: oprad_molecule_print_test
+  use oprad_functions
   use oprad_atomic 
 
-    implicit none
-    real(kind=8)::x,re,E0,gama,me,c,E1,dE,Eold
-    real(kind=8)::b0,b1,b2,alfaZ,faZ,sigma,sigmaPE,sigmaKN,rho,MA
-    real(kind=8)::P,theta,Pi,rx,ry,rz,s,phi0,phi,theta1,phi1,sdphi,cdphi
-    real(kind=8)::theta2,phi2,dx,dy,dz,aux,a1,a2,rKN,rth
-    real(kind=8)::rKNc,xr,yr,lopmedio,lopenergia,Eest
-    integer,dimension(100)::conteo
-    real(kind=8)::N,Z
-    integer(kind=8)::i,j,kn,bajaenerg,fotones,aten
+implicit none
 
-!    interface
-!       real (kind=8) function fs(rig,N,sigma)
-!         !Funcion que calcula el camino libre
-!         implicit none
-!         real(kind=8),intent(in):: N
-!         real (kind=8)::rig,sigma
-!       end function fs
-
-!         real (kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
-!         !Funcion que calcula sección eficaz Efecto Fotoeléctrico
-!         implicit none
-!         real (kind=8)::Pi,re,gama,alfaZ,b0,b1,b2,faZ
-!       end function funcsigmaPE
-
-!       real (kind=8) function funcsigmaKN(Pi,gama)
-!         !Funcion que calcula sección eficaz Efecto Compton
-!         implicit none
-!         real (kind=8)::Pi,gama
-!       end function funcsigmaKN
-
-!   end interface
+integer, parameter :: dp = selected_real_kind(15,307)
+integer,dimension(100):: conteo
+integer :: i, j, kn, bajaenerg, fotones, aten
+real(dp):: x, re, E0, gama, me, c, E1, dE, Eold, N, Z
+real(dp):: b0, b1, b2, alfaZ, faZ, sigma, sigmaPE, sigmaKN, rho, MA
+real(dp):: P, theta, rx, ry, rz, s, phi0, phi, theta1, phi1, sdphi, cdphi
+real(dp):: theta2, phi2, dx, dy, dz, aux, a1, a2, rKN, rth
+real(dp):: rKNc, xr, yr, lopmedio, lopenergia, Eest
+real(dp), parameter :: pi = acos(-1.0_dp)
     
-    Open(10,file='Datos.dat')
-    Open(20,file='Conteo.dat')
-    Open(30,file='Atenuacion.dat')
-    Open(40,file='seccion.dat')
-    Pi=acos(-1.0)
+Open(10,file='Datos.dat'); Open(20,file='Conteo.dat');Open(30,file='Atenuacion.dat')
+Open(40,file='seccion.dat')
+
     !--------------------------------------------------------------------------
     !REFERENCIA
     !re:radio del electron
@@ -59,9 +40,9 @@ program TecnicasNucleares
 ! Valores obtenidos al interpolar la tabla propuesta por Messel Cranfort
        conteo=0;bajaenerg=0
        re=2.82D-15
-       rx=0.1
+       rx=0.1_dp
        ry=10.;rz=10. !Dimensiones del medio 
-       phi1=0.;theta1=Pi/2. !Angulo de incidencia
+       phi1=0.;theta1=pi/2. !Angulo de incidencia
 ! Valores para el NaI
 !       rho=3.67;MA=149.894
 !       N=anint(rho/MA*6.022D23)
@@ -89,141 +70,145 @@ program TecnicasNucleares
        N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
        alfaZ=Z/137.036;b0=0.985808;b1=1.90563;b2=2.06941;faZ=1.079
        E0=0.0D0
+
 atenuacion:do aten=1,100
-       E0=E0+0.01D0 !Energía inicial
-       lopenergia=0 !Inicializo el conteo de fotones primarios
-       fotones=1E3
-    lpprinc:do j=1,fotones
-       E1=E0
-       dx=0.0D0;dy=0.0D0;dz=0.0D0
-       write(10,*) ""
-       write(10,*) dx,dy,dz,E1,"Inicia"
-       lopmedio=0 !Para indicar si es un fotón primario o no
-       medio:do
-          lopmedio=lopmedio+1
-          gama=E1/0.511056D0
-          !---------------------------------------------------------------------
-          !SECCIONES EFICACES	
-          !---------------------------------------------------------------------
-          !Sección eficaz Fotoeléctrica se multiplica por Z por formula no borrar          
-          sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
-          !Sección eficaz Compton
-          sigmaKN=Z*funcsigmaKN(Pi,gama)
-          sigma=sigmaPE+sigmaKN 
-          !Graba los parámetros sigma vs E1
-             if (lopenergia.eq.0.0D0.and.lopmedio.eq.1) then 
-                write(40,*) E1,sigmaPE*1D28,sigmaKN*1D28,sigma*1D28,gama 
-             end if
-             !------------------------------------------------------------------
-             !PRIMERA INTERACCIÓN
-             !s: camino libre.
-             !------------------------------------------------------------------
-             x=rand()
-             s=fs(x,N,sigma)
-!             write(*,*) s,sigma*N,sigma,E0
-             if (lopmedio.eq.1.and.s.gt.rx) then
-                lopenergia=lopenergia+1 
-                exit medio
-             end if
-             !------------------------------------------------------------------
-             !PREGUNTAMOS SI ESTÁ FUERA DEL MEDIO
-             !------------------------------------------------------------------
-             if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
-                    abs(dz).ge.rz) then
-                exit medio
-             end if
-             !------------------------------------------------------------------
-             ![5]-ELECCIÓN DEL PROCESO
-             !------------------------------------------------------------------
-             x=rand()          
-                if (x.lt.sigmaPE/sigma) then 
-                 if(aten.eq.100) then
-                      kn=nint((E1/E0)*100.D0)
-                      conteo(kn)=conteo(kn)+1
-                     write(10,*) dx,dy,dz,E1,"Fotoelectrico"
-                  end if
-                   exit medio
-                end if
-             !------------------------------------------------------------------
-             ![6]-ELECCIÓN DEL PROCESO
-             !------------------------------------------------------------------
-             ![7]-DIRECCIÓN DE SCATTERING (theta y phi)
-             !----------------------------------------------------------------- 
-                phi=2.0D0*Pi*x
-                !theta
-                xpr:do
-                   xr=rand();yr=rand() !Elegimos dos numeros aleatoreos
-                   rth=Pi*xr;rKNc=(2.75D-25)*yr
-                   a1=sin(rth)/(1.D0+gama*(1.D0-cos(rth)))**2
-                   a2=((gama**2)*(1.D0-cos(rth))**2)/(1.D0*gama*(1.D0-cos(rth)))
-                   rKN=2.494672D-25*a1*((1.D0+cos(rth))**2)+a2
-                   if(rKN.gt.rKNc) then
-                      theta=rth
-                      exit xpr
-                   end if
-                end do xpr
-               !----------------------------------------------------------------
-               ![8]-INTERCAMBIO DE ENERGIA CON EL SISTEMA
-               !--------------------------------------------------------------- 
-               Eold=E1
-               E1=0.511056D0*(gama/(1.D0+gama*(1.D0-cos(theta)))) 
-               dE=Eold-E1
-                if(E1.le.0.01D0) then
-               bajaenerg=bajaenerg+1 
-                    exit medio
-               end if
-                !---------------------------------------------------------------
-                ![9]-CAMBIO EN LA DIRECCIÓN
-                !---------------------------------------------------------------
-                x=rand()
-                s=fs(x,N,sigma)
-                theta2=acos(cos(theta1)*cos(theta)+sin(theta1) &
-                 & *sin(theta)*cos(phi))
-                !Calculo de phi2
-                cdphi=(cos(theta)-cos(theta2)*cos(theta1))/ &
-                 &(sin(theta1)*sin(theta2))
-                if (cdphi.gt.1.D0) then
-                  cdphi=1.D0
-                  elseif (cdphi.lt.(-1.D0)) then
-                  cdphi=-1.
-                end if
+  E0=E0+0.01D0 !Energía inicial
+  lopenergia=0 !Inicializo el conteo de fotones primarios
+  fotones=1E3
 
-                sdphi=sin(theta)*sin(phi)/sin(theta2)
+  lpprinc:do j=1,fotones
+    E1=E0
+    dx=0.0D0;dy=0.0D0;dz=0.0D0
+    write(10,*) ""
+    write(10,*) dx,dy,dz,E1,"Inicia"
+    lopmedio=0 !Para indicar si es un fotón primario o no
 
-                if (sdphi.gt.0.0D0) then
-                  phi2=acos(cdphi)+phi1
-                  else 
-                  phi2=2.D0*phi-acos(cdphi)+phi1
-                end if
+    medio:do
+      lopmedio=lopmedio+1
+      gama=E1/0.511056D0
+      !---------------------------------------------------------------------
+      !SECCIONES EFICACES
+      !---------------------------------------------------------------------
+      !Sección eficaz Fotoeléctrica se multiplica por Z por formula no borrar
+      sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,pi,faZ)
+      !Sección eficaz Compton
+      sigmaKN=Z*funcsigmaKN(pi,gama)
+      sigma=sigmaPE+sigmaKN
+      !Graba los parámetros sigma vs E1
+      if (lopenergia.eq.0.0D0.and.lopmedio.eq.1) then
+        write(40,*) E1,sigmaPE*1D28,sigmaKN*1D28,sigma*1D28,gama
+      end if
+      !------------------------------------------------------------------
+      !PRIMERA INTERACCIÓN
+      !s: camino libre.
+      !------------------------------------------------------------------
+      x=rand()
+      s=fs(x,N,sigma)
+      !write(*,*) s,sigma*N,sigma,E0
+      if (lopmedio.eq.1.and.s.gt.rx) then
+        lopenergia=lopenergia+1
+        exit medio
+      end if
+      !------------------------------------------------------------------
+      !PREGUNTAMOS SI ESTÁ FUERA DEL MEDIO
+      !------------------------------------------------------------------
+      if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
+        abs(dz).ge.rz) then
+        exit medio
+      end if
+      !------------------------------------------------------------------
+      ![5]-ELECCIÓN DEL PROCESO
+      !------------------------------------------------------------------
+      x=rand()
+      if (x.lt.sigmaPE/sigma) then
+        if (aten.eq.100) then
+          kn=nint((E1/E0)*100.D0)
+          conteo(kn)=conteo(kn)+1
+          write(10,*) dx,dy,dz,E1,"Fotoelectrico"
+        end if
+          exit medio
+      end if
+      !------------------------------------------------------------------
+      ![6]-ELECCIÓN DEL PROCESO
+      !------------------------------------------------------------------
+      ![7]-DIRECCIÓN DE SCATTERING (theta y phi)
+      !-----------------------------------------------------------------
+      phi=2.0D0*pi*x
+      !theta
+      xpr:do
+        xr=rand();yr=rand() !Elegimos dos numeros aleatoreos
+        rth=pi*xr;rKNc=(2.75D-25)*yr
+        a1=sin(rth)/(1.D0+gama*(1.D0-cos(rth)))**2
+        a2=((gama**2)*(1.D0-cos(rth))**2)/(1.D0*gama*(1.D0-cos(rth)))
+        rKN=2.494672D-25*a1*((1.D0+cos(rth))**2)+a2
+        if(rKN.gt.rKNc) then
+          theta=rth
+          exit xpr
+        end if
+      end do xpr
+      !----------------------------------------------------------------
+      ![8]-INTERCAMBIO DE ENERGIA CON EL SISTEMA
+      !---------------------------------------------------------------
+      Eold=E1
+      E1=0.511056D0*(gama/(1.D0+gama*(1.D0-cos(theta))))
+      dE=Eold-E1
+      if(E1.le.0.01D0) then
+        bajaenerg=bajaenerg+1
+        exit medio
+      end if
+      !---------------------------------------------------------------
+      ![9]-CAMBIO EN LA DIRECCIÓN
+      !---------------------------------------------------------------
+      x=rand()
+      s=fs(x,N,sigma)
+      theta2=acos(cos(theta1)*cos(theta)+sin(theta1) &
+        & *sin(theta)*cos(phi))
+      !Calculo de phi2
+      cdphi=(cos(theta)-cos(theta2)*cos(theta1))/ &
+        &(sin(theta1)*sin(theta2))
+      if (cdphi.gt.1.D0) then
+        cdphi=1.D0
+      elseif (cdphi.lt.(-1.D0)) then
+        cdphi=-1.
+      end if
 
-                phi2=MOD(phi2,2.D0*Pi)
+      sdphi=sin(theta)*sin(phi)/sin(theta2)
 
-                !---------------------------------------------------------------
-                ![10]-CAMBIO EN LA POSICIÓN
-                !---------------------------------------------------------------
-                dx=dx+s*sin(theta2)*cos(phi2)
-                dy=dy+s*sin(theta2)*sin(phi2)
-                dz=dz+s*cos(theta2)
+      if (sdphi.gt.0.0D0) then
+        phi2=acos(cdphi)+phi1
+      else
+        phi2=2.D0*phi-acos(cdphi)+phi1
+      end if
 
-                if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
-                    abs(dz).ge.rz) then
-!                write(*,*) "Sale del medio en la segunda interacción"
-                exit medio
-                end if
+      phi2=MOD(phi2,2.D0*pi)
+
+      !---------------------------------------------------------------
+      ![10]-CAMBIO EN LA POSICIÓN
+      !---------------------------------------------------------------
+      dx=dx+s*sin(theta2)*cos(phi2)
+      dy=dy+s*sin(theta2)*sin(phi2)
+      dz=dz+s*cos(theta2)
+
+      if (dx.gt.rx.or.dx.lt.0.0D0.or.abs(dy).ge.ry.or. &
+        abs(dz).ge.rz) then
+      !write(*,*) "Sale del medio en la segunda interacción"
+        exit medio
+      end if
                 
-                !Establece condiciones para graficar el trazado
-                if(aten.eq.100) then
-                kn=nint((dE/E0)*100.D0)
-                conteo(kn)=conteo(kn)+1
-                write(10,*) dx,dy,dz,dE,"Compton"
-                end if
+      !Establece condiciones para graficar el trazado
+      if(aten.eq.100) then
+        kn=nint((dE/E0)*100.D0)
+        conteo(kn)=conteo(kn)+1
+        write(10,*) dx,dy,dz,dE,"Compton"
+      end if
 
-          end do medio
-       end do lpprinc
+    end do medio
+  end do lpprinc
 
 
-!Gran bucle para el programa
-write(30,*) -log(lopenergia/fotones)/(rho*rx*100.D0),E0
+  !Gran bucle para el programa
+  write(30,*) -log(lopenergia/fotones)/(rho*rx*100.D0),E0
+
 end do atenuacion
 
        E0=0.0D0
@@ -231,29 +216,26 @@ end do atenuacion
        E0=E0+0.01D0
         write(20,*) E0,conteo(i)
        end do
- !==============================================================================
+!==============================================================================
 100 format(x,A,1x,F5.0,x,A,2x,F5.0,x,A)
 101 format(x,A,2x,F10.8,x,A)
 !103 format(x,A,2x,I4,x,A)
-  !=============================================================================
+!=============================================================================
   write(*,*) '****************************************************************'
-  write(*,'(30x,A)') 'PARAMETROS INGRESADOS'
-  write(*,101) 'Espesor del material=',rx,"m"
-  write(*,*) 'Energía de fotones incidentes=','1.0',"MeV"
-  write(*,*) 'Numero de fotones incidentes=',fotones
+  write(*,'(30x,A)') 'Input parameters'
+  write(*,101) 'Material Thickness :',rx," [m]"
+  write(*,*) 'Energy of incident photons :','1.0'," [MeV]"
+  write(*,*) 'Number of incident photons :', fotones, 'Photons'
+  write(*,*) ' '
  !=============================================================================
   write(*,*) '****************************************************************'
-  write(*,'(30x,A)') 'RESULTADOS'
-  write(*,101) "Coeficiente de atenuacion mu:",-log(lopenergia/fotones)/(rx*100.D0)
-  write(*,101) "Porcentaje de fotones que atraviesan:",(lopenergia/fotones)*100.D0,"%"
-  write(*,*) "-log(n0/n)",-log(lopenergia/fotones)
+  write(*,'(30x,A)') 'Output parameters'
+  write(*,101) "Attenuation coefficient (\mu) :", -log(lopenergia/fotones)/(rx*100.D0), "[1/m^2]"
+  write(*,101) "Porcentual relation of photon in-out :", (lopenergia/fotones)*100.D0,"%"
   write(*,*) '****************************************************************'
   !=============================================================================
-       close(10)
-       close(20)
-       close(30)
-       close(40)
-       stop
-     end program TecnicasNucleares
+  close(10); close(20); close(30); close(40)
+  stop
+end program OpenRadiac
      
   
