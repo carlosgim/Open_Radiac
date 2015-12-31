@@ -178,11 +178,6 @@ oprad/fast:
 	$(MAKE) -f bin/CMakeFiles/oprad.dir/build.make bin/CMakeFiles/oprad.dir/build
 .PHONY : oprad/fast
 
-# Manual pre-install relink rule for target.
-oprad/preinstall:
-	$(MAKE) -f bin/CMakeFiles/oprad.dir/build.make bin/CMakeFiles/oprad.dir/preinstall
-.PHONY : oprad/preinstall
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"

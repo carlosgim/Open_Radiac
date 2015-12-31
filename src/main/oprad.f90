@@ -1,6 +1,6 @@
 ! (c) Carlos A. Gimenez
 ! licensed under the GNU General Public License V3
-program OpenRadiac
+subroutine openradiac
 
   use oprad_molecule, only: oprad_molecule_print_test
   use oprad_functions
@@ -236,6 +236,7 @@ end do atenuacion
   !=============================================================================
   close(10); close(20); close(30); close(40)
   stop
-end program OpenRadiac
+
+end subroutine openradiac
      
   
