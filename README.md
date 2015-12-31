@@ -9,10 +9,7 @@ Written by Carlos A. Gimenez, Natural and Exact Science Faculty
                               Corrientes, Argentina
    
     Contributors:
-    Riback, Jessica
-    Pasian, Francisco
     Prieto, Leticia
-    Matusevich, Gabriel
    
 ## Requirements ##
 
