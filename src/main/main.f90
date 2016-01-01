@@ -3,6 +3,7 @@
 ! include 'oprad.f90'
 program main
 
+use readinput
 !================================================================================!
 ! Interface program
 !================================================================================!
@@ -21,27 +22,24 @@ program main
 
 implicit none
  integer :: i
-! character :: openrad
 
-write(*,*) '**********************************************'
-write(*,*) 'Please choose what program do you want to run:'
-write(*,*) ' '
-write(*,*) '1: OpenRadiac'
-write(*,*) '2: Stopping Power'
-write(*,*) '3: burn in hell'
-read(*,*) i
-write(*,*) '**********************************************'
-write(*,*) ' '
+! Call to read input module
+write(*,*) 'Please check the INPUT.inp file'
+write(*,*) 'Then push enter'
+read(*,*)
 
-if (i.eq.1) then
+call readeig_mod
+
+
+if(kindofwork.eq.'**OPRAD') then
+ write(*,*) 'Running OpenRadiac Program'
  call openradiac    
-elseif(i.eq.2) then
- write(*,*) 'Running Stopping Power Program'
- write(*,*) '=============================='
+elseif(kindofwork.eq.'**STOPPW') then
+ write(*,*) 'Stopping Power Program - Check the cgimsoft.out file'
  call stopping_power
- write(*,*) 'May the soft be with you!'
-elseif(i.eq.3) then
- write(*,*) 'Get of here!'
+  
+else
+ write(*,*) 'Something goes wrong in the INPUT file'
 endif
 
 

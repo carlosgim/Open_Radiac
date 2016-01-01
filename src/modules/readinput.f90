@@ -5,28 +5,22 @@ module readinput
 
   implicit none
 
-!  type :: stopping_power_code
     integer :: z, iunit, ier
     integer :: velocity
-    character(len=50) :: title
-!  end type stopping_power_code
-
-!type( stopping_power_code), public :: var
-
-  ! Some global parameter
-
-  ! Internal variables
-  ! headtitle: just the title of the input.
-  ! chdum: dummy variable for references in INPUT file.
-  character(8)  :: headtitle, chdum
+    character(len=50) :: kindofwork
 
 contains
 
   subroutine readeig_mod
   implicit none
-  
+
+! Internal variables
+! chdum: dummy variable for references in INPUT file.
+! headtitle: just the title of the input.
+
   integer :: iunit, ier
-!  integer :: velocity
+  character(8)  :: optionwork,chdum,headtitle
+
   !------------------------------------------------------------------------------!
   !                       Initialize global variables                            !
   !------------------------------------------------------------------------------!
@@ -41,11 +35,28 @@ contains
 
   rewind iunit
 
-  ! dcbgen.h
+! Principal reading
   read(iunit,*) headtitle
-  read(iunit,*) z
-  read(iunit,*) velocity
-  write(*,*) 'readinput z',z
+
+! Read kind of work
+! =================
+  read(iunit,*) kindofwork
+
+
+  if(kindofwork.eq.'**STOPPW') then
+! Stopping power options
+! ======================
+    read(iunit,*) optionwork
+    if(optionwork.eq.'.CLASS') then
+      read(iunit,*) chdum
+      read(iunit,*) z
+      read(iunit,*) chdum
+      read(iunit,*) velocity
+    endif
+  elseif(kindofwork.eq.'**OPRAD') then
+      write(*,*) 'nothing to do...'
+  endif
+
 
   ! close file
   close(iunit,status='keep')
