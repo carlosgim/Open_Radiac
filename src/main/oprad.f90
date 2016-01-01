@@ -3,12 +3,12 @@
 subroutine openradiac
 
   use oprad_molecule, only: oprad_molecule_print_test
-  use oprad_functions
+  use functions
   use oprad_atomic 
 
 implicit none
 
-integer, parameter :: dp = selected_real_kind(15,307)
+!integer, parameter :: dp = selected_real_kind(15,307)
 integer,dimension(100):: conteo
 integer :: i, j, kn, bajaenerg, fotones, aten
 real(dp):: x, re, E0, gama, me, c, E1, dE, Eold, N, Z
@@ -16,7 +16,7 @@ real(dp):: b0, b1, b2, alfaZ, faZ, sigma, sigmaPE, sigmaKN, rho, MA
 real(dp):: P, theta, rx, ry, rz, s, phi0, phi, theta1, phi1, sdphi, cdphi
 real(dp):: theta2, phi2, dx, dy, dz, aux, a1, a2, rKN, rth
 real(dp):: rKNc, xr, yr, lopmedio, lopenergia, Eest
-real(dp), parameter :: pi = acos(-1.0_dp)
+!real(dp), parameter :: pi = acos(-1.0_dp)
     
 Open(10,file='Datos.dat'); Open(20,file='Conteo.dat');Open(30,file='Atenuacion.dat')
 Open(40,file='seccion.dat')
@@ -90,9 +90,9 @@ atenuacion:do aten=1,100
       !SECCIONES EFICACES
       !---------------------------------------------------------------------
       !Sección eficaz Fotoeléctrica se multiplica por Z por formula no borrar
-      sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,pi,faZ)
+      sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,faZ)
       !Sección eficaz Compton
-      sigmaKN=Z*funcsigmaKN(pi,gama)
+      sigmaKN=Z*funcsigmaKN(gama)
       sigma=sigmaPE+sigmaKN
       !Graba los parámetros sigma vs E1
       if (lopenergia.eq.0.0D0.and.lopmedio.eq.1) then

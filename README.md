@@ -1,6 +1,6 @@
-# OpenRadiac #
+# cgimsoft #
 
-[OpenRadiac Program](http://carlosgim.github.io/OpenRadiac/) - Version 1.0 03/09/2015
+[cgimsoft Program](http://carlosgim.github.io/OpenRadiac/) - Version 1.0 03/09/2015
 
 A simple algorithm for study the transport of gamma rays in a medium
    
@@ -44,8 +44,8 @@ Corrientes - Argentina
 e-mail: scire1905[arroba]gmail.com
 
 ## References ##
-
-- Am. J. Phys. 71 (1), January 2003
+ [1] J. E. Turner, Atoms, Radiation and Radiation Protection. Wiley (2007). 
+ [2] Am. J. Phys. 71 (1), January 2003
 
 ## Source cmake temp ##
 

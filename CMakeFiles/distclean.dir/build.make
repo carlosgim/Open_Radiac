@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/carlosgim/Documents/SC_CODE/OpenRadiac
+CMAKE_SOURCE_DIR = /home/carlosgim/Documents/SC_CODE/cgimsoft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/carlosgim/Documents/SC_CODE/OpenRadiac
+CMAKE_BINARY_DIR = /home/carlosgim/Documents/SC_CODE/cgimsoft
 
 # Utility rule file for distclean.
 
@@ -46,7 +46,7 @@ CMAKE_BINARY_DIR = /home/carlosgim/Documents/SC_CODE/OpenRadiac
 include CMakeFiles/distclean.dir/progress.make
 
 CMakeFiles/distclean:
-	/usr/bin/cmake -P /home/carlosgim/Documents/SC_CODE/OpenRadiac/distclean.cmake
+	/usr/bin/cmake -P /home/carlosgim/Documents/SC_CODE/cgimsoft/distclean.cmake
 
 distclean: CMakeFiles/distclean
 distclean: CMakeFiles/distclean.dir/build.make
@@ -61,6 +61,6 @@ CMakeFiles/distclean.dir/clean:
 .PHONY : CMakeFiles/distclean.dir/clean
 
 CMakeFiles/distclean.dir/depend:
-	cd /home/carlosgim/Documents/SC_CODE/OpenRadiac && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/carlosgim/Documents/SC_CODE/OpenRadiac /home/carlosgim/Documents/SC_CODE/OpenRadiac /home/carlosgim/Documents/SC_CODE/OpenRadiac /home/carlosgim/Documents/SC_CODE/OpenRadiac /home/carlosgim/Documents/SC_CODE/OpenRadiac/CMakeFiles/distclean.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/carlosgim/Documents/SC_CODE/cgimsoft && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/carlosgim/Documents/SC_CODE/cgimsoft /home/carlosgim/Documents/SC_CODE/cgimsoft /home/carlosgim/Documents/SC_CODE/cgimsoft /home/carlosgim/Documents/SC_CODE/cgimsoft /home/carlosgim/Documents/SC_CODE/cgimsoft/CMakeFiles/distclean.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/distclean.dir/depend
 

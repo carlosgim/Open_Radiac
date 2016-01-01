@@ -8,7 +8,7 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.
-SET(CMAKE_Fortran_TARGET_MODULE_DIR "/home/carlosgim/Documents/SC_CODE/OpenRadiac/lib")
+SET(CMAKE_Fortran_TARGET_MODULE_DIR "/home/carlosgim/Documents/SC_CODE/cgimsoft/lib")
 
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH

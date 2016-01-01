@@ -5,6 +5,7 @@
 # Add the source files
 SET(FOO_src ${SRCFOO}/oprad.f90
             ${SRCFOO}/main.f90
+            ${SRCFOO}/stopping_power.f90
 )
 
 # Define the executable in terms of the source files
