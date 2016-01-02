@@ -5,9 +5,7 @@ module functions
   use constants
   
   implicit none
-!  public :: fs, funcsigmaPE, funcsigmaKN
-!  public :: rig, N, sigma, gama, alfaZ, b0, b1, b2, Pi, faZ
-!  real(kind=8) :: rig, N, sigma, gama, alfaZ, b0, b1, b2, Pi, faZ
+
 contains
 
 !*********************************************************************************

@@ -6,7 +6,7 @@ module readinput
   implicit none
 
     integer :: z, iunit, ier, orblvl
-    real(kind=8) :: kineticenergy, density, massnumber
+    real(kind=8) :: density, massnumber
     character(len=50) :: kindofwork
     character(8)  :: kindparticle,optionwork
 
@@ -51,8 +51,6 @@ contains
     read(iunit,*) kindparticle
     ! Option work .CLASS or .REL
     read(iunit,*) optionwork
-    read(iunit,*) chdum
-    read(iunit,*) kineticenergy
     read(iunit,*) chdum
     read(iunit,*) chdum
     read(iunit,*) z
