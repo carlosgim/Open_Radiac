@@ -1,7 +1,16 @@
 CGIMSOFT
 **STOPPW
-.CLASS
-velocity 
+.PART
+p
+.REL
+Kinetic Energy
+5.0
+.MEDIUM
+Atomic number
 10
-Atomic Number
-9
+Mass number
+18.0
+Medium density
+1.0
+Electronic Level
+1

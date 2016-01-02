@@ -28,7 +28,7 @@ write(*,*) 'Please check the INPUT.inp file'
 write(*,*) 'Then push enter'
 read(*,*)
 
-call readeig_mod
+call readinput_mod
 
 
 if(kindofwork.eq.'**OPRAD') then

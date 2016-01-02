@@ -28,7 +28,7 @@ module constants
 !   =========
 
 !   ech: electron charge [C].
-    real(dp), parameter :: ech = -1.6022e-19_dp
+    real(dp), parameter :: ech = 1.6022e-19_dp
 !   emass: electron mass [kg].
     real(dp), parameter :: emass = 9.1094e-31_dp
 !   pmass: proton mass [kg].

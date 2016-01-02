@@ -5,13 +5,14 @@ module readinput
 
   implicit none
 
-    integer :: z, iunit, ier
-    integer :: velocity
+    integer :: z, iunit, ier, orblvl
+    real(kind=8) :: kineticenergy, density, massnumber
     character(len=50) :: kindofwork
+    character(8)  :: kindparticle,optionwork
 
 contains
 
-  subroutine readeig_mod
+  subroutine readinput_mod
   implicit none
 
 ! Internal variables
@@ -19,7 +20,7 @@ contains
 ! headtitle: just the title of the input.
 
   integer :: iunit, ier
-  character(8)  :: optionwork,chdum,headtitle
+  character(8)  :: chdum, headtitle
 
   !------------------------------------------------------------------------------!
   !                       Initialize global variables                            !
@@ -42,17 +43,26 @@ contains
 ! =================
   read(iunit,*) kindofwork
 
-
   if(kindofwork.eq.'**STOPPW') then
 ! Stopping power options
 ! ======================
+    read(iunit,*) chdum
+    ! Kind of particle (e,p)
+    read(iunit,*) kindparticle
+    ! Option work .CLASS or .REL
     read(iunit,*) optionwork
-    if(optionwork.eq.'.CLASS') then
-      read(iunit,*) chdum
-      read(iunit,*) z
-      read(iunit,*) chdum
-      read(iunit,*) velocity
-    endif
+    read(iunit,*) chdum
+    read(iunit,*) kineticenergy
+    read(iunit,*) chdum
+    read(iunit,*) chdum
+    read(iunit,*) z
+    read(iunit,*) chdum
+    read(iunit,*) massnumber
+    read(iunit,*) chdum 
+    read(iunit,*) density
+    read(iunit,*) chdum 
+    read(iunit,*) orblvl
+
   elseif(kindofwork.eq.'**OPRAD') then
       write(*,*) 'nothing to do...'
   endif
@@ -60,5 +70,5 @@ contains
 
   ! close file
   close(iunit,status='keep')
-  end subroutine readeig_mod
+  end subroutine readinput_mod
 end module readinput
