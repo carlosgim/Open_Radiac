@@ -9,8 +9,9 @@ subroutine stopping_power
 
 implicit none
 
-integer :: i
-real(dp) :: frec, n, partmass, velocity, beta, kineticenergy
+integer :: i, z, ier
+real(dp) :: n, partmass, velocity, beta, kineticenergy, meanI
+real(dp) :: density, massnumber
 
 100 format(A,x,f10.5)
 101 format(A,x,1pe11.4)
@@ -18,6 +19,7 @@ real(dp) :: frec, n, partmass, velocity, beta, kineticenergy
 
 open(90,file='cgimsoft.out',status='REPLACE',form='formatted',access='sequential',iostat=ier)
 
+call readinput_mod
 
 ! Choose the kind of particle and set the mass
 !=============================================
@@ -28,67 +30,26 @@ elseif(kindparticle.eq.'e') then
   partmass = emass
 endif
 
-
-
-! Calculate density of particles in medium
-! ========================================
-
+! Parameters of the medium
+! ========================
+! For whater we have:
+massnumber = 18.0
+density = 1.0
+z = 10
 n = partdensity(z,massnumber,density)
+! Mean energy excitation from eq. 5.28 see ref [1] (see README.md file)
+meanI= exp(0.2D0*log(Iavg(1))+0.8D0*log(Iavg(8)))
 
-call readinput_mod
-
-! Classic Stopping Power
-! ======================
-
-if(optionwork.eq.'.CLASS') then
+! Stopping Power
+! ==============
 write(90,*) 'INPUT Parameters'
 write(90,*) '================'
 write(90,*) 'Kind of particle:',' ', kindparticle
-write(90,*) 'Atomic number of target:', z
-write(90,100) 'Atomic mass:', massnumber
-write(90,100) 'Density [g cm^{-3}]:', density
-write(90,*) 'Orbital level:', orblvl
-! Calculate the frecuency orbital
-frec = orbfrec(z,orblvl)
-
 write(90,*) ''
 write(90,*) 'OUTPUT Parameters'
 write(90,*) '================='
-write(90,101) 'Check frecuency variable', frec
 write(90,101) 'Check partdensity variable [part m^-3]', n
-write(90,101) 'Check velocity variable [m s^-1]', velocity
-write(90,*) ''
-write(90,101) '************************************************'
-write(90,101) '           Classic Stopping Power          '
-write(90,101) '************************************************'
-write(90,101) ''
-write(90,101) 'Energy [MeV]   SP[MeV cm^-1]'
-do i=1,100,1
-  kineticenergy = 1.0*i
-! Using the expresion: V=(2T/M)^{1/2}, just take from kinetic energy definition
-velocity = sqrt(2.0*mevtoj(kineticenergy)/partmass)
-write(90,102) kineticenergy, jtomev(classtopwr(1,n,velocity,frec))/100
-end do 
-
-! Classic Stopping Power
-! ======================
-elseif(optionwork.eq.'.REL') then
-write(90,*) 'INPUT Parameters'
-write(90,*) '================'
-write(90,*) 'Kind of particle:',' ', kindparticle
-write(90,*) 'Atomic number of target:', z
-write(90,100) 'Mass number:', massnumber
-write(90,100) 'Density [g cm^{-3}]:', density
-write(90,*) ''
-write(90,*) 'OUTPUT Parameters'
-write(90,*) '================='
-write(90,101) 'Check frecuency variable', frec
-write(90,101) 'Check partdensity variable [part m^-3]', n
-write(90,101) 'Check velocity variable [m s^-1]', velocity
-write(90,101) 'Beta parameter v/c', beta
-write(90,101) 'Mean Excitation Energy [eV]', Iavg(z)
-! We need convert eV to MeV and then transform.
-write(90,101) 'Mean Excitation Energy [J]', mevtoj(Iavg(z)/1.0D6)
+write(90,101) 'Mean Excitation Energy [eV]', meanI
 write(90,101) 'Particle Mass', partmass
 write(90,101) ''
 write(90,101) ''
@@ -102,11 +63,9 @@ KineticEnergyloop: do i=1,100,1
   kineticenergy = 1.0*i
   velocity = sqrt(2.0*mevtoj(kineticenergy)/partmass)
   beta = velocity/cvalue
-  write(90,102) kineticenergy, jtomev(relatstopwr(1,n,beta,mevtoj(Iavg(z)/1.0D6)))/100
+  write(90,102) kineticenergy, jtomev(relatstopwr(1,n,beta,meanI))/100
 
 end do KineticEnergyloop
-
-endif
 
 stop
 

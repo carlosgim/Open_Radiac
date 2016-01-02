@@ -8,18 +8,6 @@ Stopping Power Code
 **STOPPW
 .PART
 # e,p,n: For electron, proton or neutron
-# Call to Stopping Power Module
-.CLASS
-# Clasical equation
-- Kinetic Energy
-# Real Number: Value in MeV
-
-.RELAT 
-# Relativistic or Bethe equation
-
-.MEDIUM
-- Atomic Number
-# Integer
 
 Example INPUT CLASS
 ===================
@@ -28,15 +16,4 @@ CGIMSOFT
 **STOPPW
 .PART
 p
-.CLASS
-Kinetic Energy
-10.0
-.MEDIUM
-Atomic number
-2
-Mass number
-4.0
-Medium density
-1.0
-Electronic Level
-1
+

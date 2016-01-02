@@ -42,7 +42,4 @@ module constants
 !   k0: K constant related with electric permitivity in [N m^2 C^-2].
     real(dp), parameter :: k0 = 8.98755e9_dp
 
-
-
-   
 end module constants

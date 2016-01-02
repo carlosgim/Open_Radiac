@@ -5,10 +5,7 @@ module readinput
 
   implicit none
 
-    integer :: z, iunit, ier, orblvl
-    real(kind=8) :: density, massnumber
-    character(len=50) :: kindofwork
-    character(8)  :: kindparticle,optionwork
+    character(8)  :: kindparticle, kindofwork
 
 contains
 
@@ -20,11 +17,8 @@ contains
 ! headtitle: just the title of the input.
 
   integer :: iunit, ier
-  character(8)  :: chdum, headtitle
+  character(8)  :: chdum
 
-  !------------------------------------------------------------------------------!
-  !                       Initialize global variables                            !
-  !------------------------------------------------------------------------------!
   iunit = 60
   ! open file
   open(iunit,file='INPUT.inp',status='old',form='formatted',access='sequential',iostat=ier)
@@ -37,7 +31,7 @@ contains
   rewind iunit
 
 ! Principal reading
-  read(iunit,*) headtitle
+  read(iunit,*) chdum
 
 ! Read kind of work
 ! =================
@@ -49,22 +43,10 @@ contains
     read(iunit,*) chdum
     ! Kind of particle (e,p)
     read(iunit,*) kindparticle
-    ! Option work .CLASS or .REL
-    read(iunit,*) optionwork
-    read(iunit,*) chdum
-    read(iunit,*) chdum
-    read(iunit,*) z
-    read(iunit,*) chdum
-    read(iunit,*) massnumber
-    read(iunit,*) chdum 
-    read(iunit,*) density
-    read(iunit,*) chdum 
-    read(iunit,*) orblvl
 
   elseif(kindofwork.eq.'**OPRAD') then
       write(*,*) 'nothing to do...'
   endif
-
 
   ! close file
   close(iunit,status='keep')
