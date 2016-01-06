@@ -34,21 +34,48 @@ real(kind=8) function funcsigmaKN(gama)
 end function funcsigmaKN
 
 !*********************************************************************************
-! Relativistic stopping power equation
+! Relativistic stopping power equation 
 !*********************************************************************************
-! Ref: Eq. 5.23, Pag. 120 [1] (see ref. in README.md file)
 ! z: atomic number of particle
 ! n: density of particles
 ! m: mass of particle
 ! v: velocity of particles
 ! the 1.0D6 factor is because we express in eV the argument of log
 ! the 100 factor is because we work in cm
-real(dp) function relatstopwr(z,n,beta,Iavg)
+
+! Protons and heavy particles
+! ===========================
+! Ref: Eq. 5.23, Pag. 120 [1] (see ref. in README.md file)
+real(dp) function stopwrprot(z,n,beta,Iavg)
   integer :: z
-  real(dp) :: n, beta, Iavg
-  relatstopwr=((jtomev(4.0*pi*n*(k0*z*(ech**2.0))**2.0/(emass*cvalue**2.0))/100)/beta**2)* &
-  (log(1.0D6*(jtomev(2.0*emass*cvalue**2.0))*beta**2/(1.0-beta**2))-beta**2-log(Iavg))
-end function relatstopwr
+  real(dp) :: A, Fbeta, n, beta, Iavg
+ ! A: Correspond to coefficient with [MeV cm^-1] units.
+  A = jtomev(4.0*pi*n*(k0*z*(ech**2.0))**2.0/(emass*cvalue**2.0))/100
+ Fbeta = (log(1.0D6*(jtomev(2.0*emass*cvalue**2.0))*beta**2/(1.0-beta**2))-beta**2)
+  stopwrprot=(A/beta**2)*(Fbeta-log(Iavg))
+end function stopwrprot
+
+! Electrons
+! =========
+! Ref: Eq. 6.5, Pag. 140 [1] (see ref. in README.md file)
+real(dp) function stopwrelec(n,beta,Iavg,kineticenergy)
+  real(dp) :: A, Gbeta, Fbeta, n, beta, Iavg, tau, kineticenergy
+
+ ! A: Correspond to coefficient with [MeV cm^-1] units.
+ ! tau: correspond to the relation between kinetic energy and the 
+ ! mass rest of electron 0.511
+
+  tau = kineticenergy/0.511
+  A = jtomev(4.0*pi*n*(k0*(ech**2.0))**2.0/(emass*cvalue**2.0))/100
+
+  Fbeta = (1.0-beta**2.0)/2.0*(1.0+tau**2.0/8.0-(2.0*tau+1.0)*log(2.0))
+
+  Gbeta = log(3.61D5*tau*sqrt(tau+2.0))+Fbeta
+
+  stopwrelec=(A/beta**2)*(Gbeta-log(Iavg))
+
+end function stopwrelec
+
 
 !*********************************************************************************
 ! medium parameters

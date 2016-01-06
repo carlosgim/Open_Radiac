@@ -61,12 +61,26 @@ write(90,101) '************************************************'
 write(90,101) ''
 write(90,101) 'Energy [MeV]   beta^2  SP[MeV cm^-1]'
 
-KineticEnergyloop: do i=1,1000,1
+KineticEnergyloop: do i=1,100,1
 
-  kineticenergy = 0.01*i
+  kineticenergy = 1.0*i
   velocity = sqrt(2.0*mevtoj(kineticenergy)/partmass)
-  beta = velocity/cvalue
-  write(90,102) kineticenergy, beta**2.0, relatstopwr(1,n,beta,meanI)
+
+  
+! Check kind of particle for use the correspond equation
+! ======================================================
+
+  if(kindparticle.eq.'p') then
+    beta = velocity/cvalue
+    write(90,102) kineticenergy, beta**2.0, stopwrprot(1,n,beta,meanI)
+
+  elseif(kindparticle.eq.'e') then
+
+  ! From relativistic kinetic energy
+  beta = sqrt(1.0-1.0/(kineticenergy/0.511+1.0)**2)
+
+    write(90,102) kineticenergy, beta**2.0, stopwrelec(n,beta,meanI,kineticenergy)
+  end if
 
 end do KineticEnergyloop
 
