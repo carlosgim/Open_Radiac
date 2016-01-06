@@ -1,3 +1,37 @@
+The Stopping power module use the follows modules:
+
+ - readinput
+ - constants
+ - functions
+   - convert_unit
+   - constants
+ - convert_unit
+
+Relativisic Sopping power equation (module/functions.f90)
+=========================================================
+As we can see in references [1], the eq. 5.23 give wrong number
+at low energy (negative values for sopping power). For that reason
+this aproximation must be corrected.
+
+Take from Ref: Eq. 5.23, Pag. 120 [1] (see ref. in README.md file)
+
+z: atomic number of particle
+n: density of particles
+m: mass of particle
+v: velocity of particles
+the 1.0D6 factor is because we express in eV the argument of log
+the 100 factor is because we work in cm
+
+real(dp) function relatstopwr(z,n,beta,Iavg)
+  integer :: z
+  real(dp) :: n, beta, Iavg
+  relatstopwr=((jtomev(4.0*pi*n*(k0*z*(ech**2.0))**2.0/(emass*cvalue**2.0))/100)/beta**2)* &
+  (log(1.0D6*(jtomev(2.0*emass*cvalue**2.0))*beta**2/(1.0-beta**2))-beta**2-log(Iavg))
+end function relatstopwr
+
+
+INPUT for Stopping power
+========================
 (**) Principal Flag
 (.XX) Sub work
 (#) Comments

@@ -3,7 +3,7 @@
 module functions
 
   use constants
-  
+  use convert_unit 
   implicit none
 
 contains
@@ -41,11 +41,13 @@ end function funcsigmaKN
 ! n: density of particles
 ! m: mass of particle
 ! v: velocity of particles
-
+! the 1.0D6 factor is because we express in eV the argument of log
+! the 100 factor is because we work in cm
 real(dp) function relatstopwr(z,n,beta,Iavg)
   integer :: z
   real(dp) :: n, beta, Iavg
-  relatstopwr=4.0*pi*n*(k0*z*(ech**2))**2/(emass*cvalue**2)*(log((2*emass*(cvalue*beta)**2)/(Iavg*(1-beta**2)))-beta**2)
+  relatstopwr=((jtomev(4.0*pi*n*(k0*z*(ech**2.0))**2.0/(emass*cvalue**2.0))/100)/beta**2)* &
+  (log(1.0D6*(jtomev(2.0*emass*cvalue**2.0))*beta**2/(1.0-beta**2))-beta**2-log(Iavg))
 end function relatstopwr
 
 !*********************************************************************************

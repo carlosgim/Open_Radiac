@@ -15,7 +15,7 @@ real(dp) :: density, massnumber
 
 100 format(A,x,f10.5)
 101 format(A,x,1pe11.4)
-102 format(f10.2,5x,1pe11.4)
+102 format(f10.2,3x,f10.6,3x,1pe11.4)
 
 open(90,file='cgimsoft.out',status='REPLACE',form='formatted',access='sequential',iostat=ier)
 
@@ -45,6 +45,8 @@ meanI= exp(0.2D0*log(Iavg(1))+0.8D0*log(Iavg(8)))
 write(90,*) 'INPUT Parameters'
 write(90,*) '================'
 write(90,*) 'Kind of particle:',' ', kindparticle
+write(90,*) 'Electron mass:',' ', emass
+write(90,*) 'c value',' ', cvalue
 write(90,*) ''
 write(90,*) 'OUTPUT Parameters'
 write(90,*) '================='
@@ -57,13 +59,14 @@ write(90,101) '************************************************'
 write(90,101) '           Relativistic Stopping Power          '
 write(90,101) '************************************************'
 write(90,101) ''
-write(90,101) 'Energy [MeV]   SP[MeV cm^-1]'
+write(90,101) 'Energy [MeV]   beta^2  SP[MeV cm^-1]'
 
-KineticEnergyloop: do i=1,100,1
-  kineticenergy = 1.0*i
+KineticEnergyloop: do i=1,1000,1
+
+  kineticenergy = 0.01*i
   velocity = sqrt(2.0*mevtoj(kineticenergy)/partmass)
   beta = velocity/cvalue
-  write(90,102) kineticenergy, jtomev(relatstopwr(1,n,beta,meanI))/100
+  write(90,102) kineticenergy, beta**2.0, relatstopwr(1,n,beta,meanI)
 
 end do KineticEnergyloop
 
