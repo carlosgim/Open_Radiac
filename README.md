@@ -33,9 +33,7 @@ For running a new sistem use the follow comands:
 
 ## Contact ##
 
-Dr. Carlos A. Giménez
-
-Corrientes - Argentina
+Carlos A. Giménez
 
 Contact: www.carlosagimenez.com/contact
 
