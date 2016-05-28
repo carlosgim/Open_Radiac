@@ -1,16 +1,12 @@
-# cgimsoft #
+# OPEN RADIAC #
 
-[cgimsoft Program](http://carlosgim.github.io/OpenRadiac/) - Version 1.0 03/09/2015
+[Open Radiac Program] - Version 1.0 03/09/2015
 
 A simple algorithm for study the transport of gamma rays in a medium
    
 Written by Carlos A. Gimenez, Natural and Exact Science Faculty
                               Northeastern University of Argentina,
                               Corrientes, Argentina
-   
-    Contributors:
-    Prieto, Leticia
-   
 ## Requirements ##
 
 - gfortran or another fortran compiler
@@ -37,11 +33,11 @@ For running a new sistem use the follow comands:
 
 ## Contact ##
 
-Lic. Carlos A. Giménez
+Dr. Carlos A. Giménez
 
 Corrientes - Argentina
 
-e-mail: scire1905[arroba]gmail.com
+Contact: www.carlosagimenez.com/contact
 
 ## References ##
  [1] J. E. Turner, Atoms, Radiation and Radiation Protection. Wiley (2007). 
