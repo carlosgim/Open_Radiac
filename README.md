@@ -40,7 +40,7 @@ For running a new sistem use the follow comands:
 
 Carlos A. Giménez
 
-Contact: www.carlosagimenez.com/contact
+Contact: www.carlosagimenez.com
 
 ## References ##
  [1] J. E. Turner, Atoms, Radiation and Radiation Protection. Wiley (2007). 
