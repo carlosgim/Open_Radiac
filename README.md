@@ -1,12 +1,17 @@
 # OPEN RADIAC #
 
-[Open Radiac Program] - Version 1.0 03/09/2015
+[Open Radiac Program] - Version 1.1 02-06-2016
 
 A simple algorithm for study the transport of gamma rays in a medium
    
-Written by Carlos A. Gimenez, Natural and Exact Science Faculty
-                              Northeastern University of Argentina,
-                              Corrientes, Argentina
+Written by Carlos A. Gimenez under GNU V-3 Licence
+
+Colaborators: 
+     - Francisco Pasian
+
+Natural and Exact Science Faculty Northeastern University
+Argentina, Corrientes, Argentina
+
 ## Requirements ##
 
 - gfortran or another fortran compiler
