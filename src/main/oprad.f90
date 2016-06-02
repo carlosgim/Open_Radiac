@@ -65,6 +65,28 @@ Open(40,file='seccion.dat')
 !       N=rho/MA*6.022D23*Z*1.D6 !Densidad de particulas en m^3
 !       alfaZ=Z/137.036;b0=0.830494;b1=1.76309;b2=1.80629;faZ=1.079
 ! Valores para el Hidrogeno
+!---------valores extraidos de tabla---------------------------------------------
+! Valores para el Pb
+!       rho=11.4;MA=207.19
+!       Z=82.
+!       N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
+!       alfaZ=Z/137.036;b0=0.23248;b1=1.234;b2=0.28187;faZ=1.162
+! Valores para el Sn
+!       rho=7.30;MA=118.69 !rho:(g/cm3);MA:(g/mol)
+!       Z=50.
+!       N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
+!       alfaZ=Z/137.036;b0=0.34757;b1=1.287166;b2=0.832326;faZ=1.115 
+! Valores para el Ge
+!       rho=5.32;MA=72.59 !rho:(g/cm3);MA:(g/mol)
+!       Z=32.
+!       N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
+!       alfaZ=Z/137.036;b0=0.47711;b1=1.455444;b2=1.248352;faZ=1.0987 
+! Valores para el Si
+!       rho=2.33;MA=28.086 !rho:(g/cm3);MA:(g/mol)
+!       Z=14.
+!       N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
+!       alfaZ=Z/137.036;b0=0.6996;b1=1.6426;b2=1.5840;faZ=1.0795 
+! Valores para el Al
        rho=0.071;MA=1.00797
        Z=1.
        N=rho/MA*6.022D23*Z*1D6 !Densidad de particulas en m^3
@@ -90,7 +112,12 @@ atenuacion:do aten=1,100
       !SECCIONES EFICACES
       !---------------------------------------------------------------------
       !Sección eficaz Fotoeléctrica se multiplica por Z por formula no borrar
-      sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,faZ)
+      if (E1.lt.5.000E-01) then
+          sigmaPE=1D-28*fsigmaPE(Z,E1)
+      elseif (E1.gt.5.000E-01) then
+          sigmaPE=Z*funcsigmaPE(gama,alfaZ,b0,b1,b2,Pi,faZ)
+      end if
+
       !Sección eficaz Compton
       sigmaKN=Z*funcsigmaKN(gama)
       sigma=sigmaPE+sigmaKN
@@ -102,9 +129,13 @@ atenuacion:do aten=1,100
       !PRIMERA INTERACCIÓN
       !s: camino libre.
       !------------------------------------------------------------------
-      x=rand()
-      s=fs(x,N,sigma)
+      call random_number(x)
+      ! Introduzco un factor de correccion (1 o Z o MA) - Francisco
+      factor = Z
+      s=factor*fs(x,N,sigma)
+
       !write(*,*) s,sigma*N,sigma,E0
+
       if (lopmedio.eq.1.and.s.gt.rx) then
         lopenergia=lopenergia+1
         exit medio

@@ -16,7 +16,7 @@ real(kind=8) function fs(rig,N,sigma)
 !Funcion que calcula el camino libre
   real(kind=8),intent(in):: N
   real (kind=8)::rig,sigma
- fs=-log(rig)/(N*sigma) !El factor 1D2 viene de corregir N (1/m^3)
+ fs=-log(rig)/(N*sigma) !El factor 1D1 viene de corregir N (1/m^3)
 end function fs
 
 real(kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,faZ)
@@ -24,6 +24,31 @@ real(kind=8) function funcsigmaPE(gama,alfaZ,b0,b1,b2,faZ)
   real (kind=8):: gama,alfaZ,b0,b1,b2,faZ
   funcsigmaPE=9.9932D-29*((alfaZ)**4)*(faZ/gama)*(b0+b1/gama+b2/gama**2) 
 end function funcsigmaPE
+
+real (kind=8) function fsigmaPE(Z,E1)
+	implicit none
+  real (kind=8) :: Z,E1	
+if (Z.eq.6.) then
+!Carbono
+fsigmaPE= 0.0000112051*(E1**(-3.2827936727))
+elseif (Z.eq.13.) then
+!Aluminio  
+fsigmaPE= 0.0005759269*(E1**(-3.2342414732))
+elseif (Z.eq.14.) then
+!Silicio
+fsigmaPE= 0.0008348546*(E1**(-3.1394675925))
+elseif (Z.eq.32.) then
+!Germanio
+fsigmaPE= 0.0619747762*(E1**(-2.7882544211))
+elseif (Z.eq.50.) then
+!Estaño
+fsigmaPE= 0.6422055768*(E1**(-2.4732484278))
+elseif (Z.eq.82.) then
+!Plomo
+fsigmaPE= 6.8480302727*(E1**(-2.0400166499))
+end if
+	return
+end function fsigmaPE
 
 real(kind=8) function funcsigmaKN(gama)
 !Funcion que calcula sección eficaz Efecto Compton
